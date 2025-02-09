@@ -13,12 +13,10 @@ A simple HTML, CSS, and JavaScript project that displays an initial output, adds
 
 ## Preview
 ### Initial Output
-```
-[Your initial output preview](/assets/initial.png)
-```
+![Image preview](/assets/initial.png)
 
 ### After Mouse Click
-![Image Preview](/assets/mouse-clicks.png) *(Replace `image-path.png` with the actual path of your image)*
+![Image Preview](/assets/mouse-clicks.png) 
 
 ## Technologies Used
 - **HTML** for structure
@@ -28,7 +26,7 @@ A simple HTML, CSS, and JavaScript project that displays an initial output, adds
 ## How to Use
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/your-repo.git
+   git clone https://github.com/masaudahmod/text-animate-threejs
    ```
 2. Open `index.html` in your browser.
 3. Click on the output section to see the image appear.
