@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three.js Text Animation</title>
+    <style>
+        body { margin: 0; overflow: hidden; background: black; color: white; }
+        canvas { display: block; }
+        .playground {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Shader Scripts -->
+<script type="x-shader/x-vertex" id="vertexshader">
+    attribute float size;
+    attribute vec3 customColor;
+    varying vec3 vColor;
+
+    void main() {
+        vColor = customColor;
+        vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+        gl_PointSize = size * ( 300.0 / -mvPosition.z );
+        gl_Position = projectionMatrix * mvPosition;
+    }
+</script>
+
+<script type="x-shader/x-fragment" id="fragmentshader">
+    uniform vec3 color;
+    uniform sampler2D pointTexture;
+    varying vec3 vColor;
+
+    void main() {
+        gl_FragColor = vec4( color * vColor, 1.0 );
+        gl_FragColor = gl_FragColor * texture2D( pointTexture, gl_PointCoord );
+    }
+</script>
+
+<div id="magic"></div>
+
+<div class="playground">
+    <div class="bottomPosition">
+        <h1 class="special">From RICARDO SANPRIETO</h1>
+        <h2>@masaudahmod</h2>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+    let scene, camera, renderer, particles, uniforms;
+
+    function init() {
+        scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 500);
+        camera.position.z = 100;
+
+        renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        const geometry = new THREE.BufferGeometry();
+        const positions = [];
+        const colors = [];
+        const sizes = [];
+
+        for (let i = 0; i < 1000; i++) {
+            positions.push((Math.random() - 0.5) * 200);
+            positions.push((Math.random() - 0.5) * 200);
+            positions.push((Math.random() - 0.5) * 200);
+
+            colors.push(Math.random(), Math.random(), Math.random());
+            sizes.push(Math.random() * 10 + 5);
+        }
+
+        geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+        geometry.setAttribute('customColor', new THREE.Float32BufferAttribute(colors, 3));
+        geometry.setAttribute('size', new THREE.Float32BufferAttribute(sizes, 1));
+
+        uniforms = {
+            color: { value: new THREE.Color(0xffffff) },
+            pointTexture: { value: new THREE.TextureLoader().load('https://threejs.org/examples/textures/sprites/spark1.png') }
+        };
+
+        const material = new THREE.ShaderMaterial({
+            uniforms: uniforms,
+            vertexShader: document.getElementById('vertexshader').textContent,
+            fragmentShader: document.getElementById('fragmentshader').textContent,
+            transparent: true
+        });
+
+        particles = new THREE.Points(geometry, material);
+        scene.add(particles);
+
+        animate();
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+        particles.rotation.y += 0.002;
+        renderer.render(scene, camera);
+    }
+
+    init();
+</script>
+
+</body>
+</html>
