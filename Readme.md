@@ -14,16 +14,11 @@ A simple HTML, CSS, and JavaScript project that displays an initial output, adds
 ## Preview
 ### Initial Output
 ```
-[Your initial output preview]
+[Your initial output preview](/assets/initial.png)
 ```
 
 ### After Mouse Click
-![Image Preview](image-path.png) *(Replace `image-path.png` with the actual path of your image)*
-
-### Credit Section
-```
-Created by [Your Name]
-```
+![Image Preview](/assets/mouse-clicks.png) *(Replace `image-path.png` with the actual path of your image)*
 
 ## Technologies Used
 - **HTML** for structure
@@ -37,6 +32,12 @@ Created by [Your Name]
    ```
 2. Open `index.html` in your browser.
 3. Click on the output section to see the image appear.
+
+### Credit Section
+```
+Created by [RICARDO SANPRIETO]
+Codepen link: https://codepen.io/sanprieto/pen/XWNjBdb
+```
 
 ## License
 This project is open-source and free to use. If you use it, consider giving credit. 😊
